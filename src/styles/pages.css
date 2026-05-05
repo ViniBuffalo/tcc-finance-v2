@@ -1,0 +1,85 @@
+/* ═══════════════════════════════════════
+   PAGE-SPECIFIC STYLES
+   ═══════════════════════════════════════ */
+
+/* ─── Dashboard ─── */
+.dashboard-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md); margin-bottom: var(--space-lg); }
+.dashboard-stats .card { display: flex; flex-direction: column; }
+.dashboard-charts { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); margin-bottom: var(--space-lg); }
+.chart-container { position: relative; height: 280px; }
+.chart-container canvas { max-height: 100%; }
+
+/* ─── Calculator ─── */
+.calc-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: var(--space-xl); }
+.calc-result-highlight {
+  background: var(--primary-gradient);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  text-align: center;
+  color: white;
+  margin-bottom: var(--space-lg);
+}
+.calc-result-value { font-size: var(--fs-4xl); font-weight: var(--fw-extrabold); line-height: 1; margin-bottom: var(--space-xs); }
+.calc-result-label { font-size: var(--fs-sm); opacity: 0.85; }
+.calc-breakdown { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+
+/* ─── Diversification ─── */
+.diversification-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--space-xl); }
+.allocation-bar { display: flex; height: 12px; border-radius: var(--radius-full); overflow: hidden; margin: var(--space-md) 0; }
+.allocation-segment { transition: width var(--transition-slow); }
+.allocation-legend { display: flex; flex-wrap: wrap; gap: var(--space-md); }
+.legend-item { display: flex; align-items: center; gap: var(--space-xs); font-size: var(--fs-sm); }
+.legend-color { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+.asset-list { display: flex; flex-direction: column; gap: var(--space-sm); }
+.asset-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-input);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  transition: all var(--transition-fast);
+}
+.asset-item:hover { border-color: var(--primary); }
+.asset-info { display: flex; align-items: center; gap: var(--space-sm); }
+.asset-icon { width: 36px; height: 36px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: var(--fs-xs); font-weight: var(--fw-bold); }
+.asset-actions { display: flex; gap: var(--space-xs); }
+
+/* ─── Stock Market ─── */
+.stock-search { display: flex; gap: var(--space-sm); margin-bottom: var(--space-lg); }
+.stock-search .form-input { flex: 1; }
+.stock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-md); margin-bottom: var(--space-lg); }
+.stock-card { cursor: pointer; }
+.stock-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow-primary); }
+.stock-price { display: flex; align-items: baseline; gap: var(--space-sm); }
+.stock-price-value { font-size: var(--fs-2xl); font-weight: var(--fw-bold); }
+.stock-change { font-size: var(--fs-sm); font-weight: var(--fw-semibold); }
+.stock-change.up { color: var(--success); }
+.stock-change.down { color: var(--danger); }
+.stock-detail { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-xl); }
+.stock-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); }
+.stock-info-item { padding: var(--space-sm); background: var(--bg-input); border-radius: var(--radius-sm); }
+.stock-info-label { font-size: var(--fs-xs); color: var(--text-muted); }
+.stock-info-value { font-size: var(--fs-base); font-weight: var(--fw-semibold); }
+
+/* ─── Score Ring ─── */
+.score-ring-container { display: flex; flex-direction: column; align-items: center; gap: var(--space-sm); }
+.score-ring { position: relative; width: 140px; height: 140px; }
+.score-ring svg { transform: rotate(-90deg); }
+.score-ring-bg { fill: none; stroke: var(--bg-input); stroke-width: 8; }
+.score-ring-fill { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+.score-ring-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.score-ring-value { font-size: var(--fs-2xl); font-weight: var(--fw-extrabold); }
+.score-ring-label { font-size: var(--fs-xs); color: var(--text-secondary); }
+
+@media (max-width: 1024px) {
+  .dashboard-stats { grid-template-columns: repeat(2, 1fr); }
+  .dashboard-charts { grid-template-columns: 1fr; }
+  .calc-layout { grid-template-columns: 1fr; }
+  .diversification-layout { grid-template-columns: 1fr; }
+  .stock-detail { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .dashboard-stats { grid-template-columns: 1fr; }
+  .calc-breakdown { grid-template-columns: 1fr; }
+}
