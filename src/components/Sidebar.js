@@ -2,6 +2,13 @@ import { NAV_ITEMS } from '../utils/constants.js';
 import { getSession, logout } from '../services/auth.js';
 import { getInitials } from '../utils/formatters.js';
 
+function closeMobileSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  if (sidebar) sidebar.classList.remove('open');
+  if (overlay) overlay.classList.remove('active');
+}
+
 export function renderSidebar(currentRoute, onNavigate) {
   const session = getSession();
   const initials = session ? getInitials(session.name) : '?';
@@ -12,6 +19,9 @@ export function renderSidebar(currentRoute, onNavigate) {
       <div class="sidebar-brand">
         <div class="sidebar-logo">TC</div>
         <span class="sidebar-brand-text">TCC Company: Finance</span>
+        <button class="btn btn-ghost btn-icon sidebar-close-btn" id="sidebar-close-btn" aria-label="Fechar menu">
+          <i data-lucide="x" style="width:20px;height:20px;"></i>
+        </button>
       </div>
       <nav class="sidebar-nav">
         <span class="sidebar-section-label">Menu Principal</span>
@@ -33,12 +43,22 @@ export function renderSidebar(currentRoute, onNavigate) {
         </div>
       </div>
     </div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
   `;
 
-  // Nav click handlers
+  // Nav click handlers — close sidebar on mobile after navigation
   el.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', () => onNavigate(item.dataset.route));
+    item.addEventListener('click', () => {
+      closeMobileSidebar();
+      onNavigate(item.dataset.route);
+    });
   });
+
+  // Close button (mobile)
+  el.querySelector('#sidebar-close-btn').addEventListener('click', closeMobileSidebar);
+
+  // Overlay click closes sidebar
+  el.querySelector('#sidebar-overlay').addEventListener('click', closeMobileSidebar);
 
   // Logout handler
   el.querySelector('#sidebar-user-btn').addEventListener('click', () => {

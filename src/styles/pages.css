@@ -82,4 +82,34 @@
 @media (max-width: 768px) {
   .dashboard-stats { grid-template-columns: 1fr; }
   .calc-breakdown { grid-template-columns: 1fr; }
+
+  /* Stock search */
+  .stock-search { flex-direction: column; }
+  .stock-search .btn { width: 100%; }
+
+  /* Stat values smaller on mobile */
+  .stat-value { font-size: var(--fs-xl); }
+  .calc-result-value { font-size: var(--fs-2xl); }
+  .calc-result-highlight { padding: var(--space-md); }
+
+  /* Form rows stack */
+  .form-row { grid-template-columns: 1fr; }
+
+  /* Stock info grid */
+  .stock-info-grid { grid-template-columns: 1fr; }
+
+  /* Score ring smaller */
+  .score-ring { width: 110px; height: 110px; }
+  .score-ring svg { width: 110px; height: 110px; }
+
+  /* Chart containers */
+  .chart-container { height: 220px; }
+
+  /* Stock price */
+  .stock-price-value { font-size: var(--fs-xl); }
+
+  /* Allocation legend wrap */
+  .allocation-legend { gap: var(--space-sm); }
+  .legend-item { font-size: var(--fs-xs); }
 }
+

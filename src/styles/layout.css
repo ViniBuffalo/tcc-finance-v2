@@ -321,6 +321,21 @@
 .modal-body { margin-bottom: var(--space-lg); }
 .modal-footer { display: flex; justify-content: flex-end; gap: var(--space-sm); }
 
+/* ─── Mobile Menu Button ─── */
+.mobile-menu-btn {
+  display: none;
+}
+
+/* ─── Sidebar Close Button ─── */
+.sidebar-close-btn {
+  display: none;
+}
+
+/* ─── Sidebar Overlay ─── */
+.sidebar-overlay {
+  display: none;
+}
+
 /* ─── Responsive ─── */
 @media (max-width: 1024px) {
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
@@ -329,9 +344,92 @@
 }
 
 @media (max-width: 768px) {
-  .sidebar { transform: translateX(-100%); }
-  .sidebar.open { transform: translateX(0); }
-  .main-content { margin-left: 0; }
+  /* Sidebar: hidden by default, slides in */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform var(--transition-base);
+    z-index: 200;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Sidebar overlay backdrop */
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 199;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-base);
+  }
+  .sidebar-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Show hamburger and close buttons */
+  .mobile-menu-btn {
+    display: flex !important;
+  }
+  .sidebar-close-btn {
+    display: flex !important;
+    margin-left: auto;
+  }
+
+  /* Main content full width */
+  .main-content {
+    margin-left: 0;
+  }
+
+  /* Smaller page content padding */
+  .page-content {
+    padding: var(--space-md);
+  }
+
+  /* Header adjustments */
+  .header {
+    padding: 0 var(--space-md);
+  }
+  .header-title {
+    font-size: var(--fs-md);
+  }
+  .header-date {
+    display: none;
+  }
+
+  /* Grid adjustments */
   .grid-2 { grid-template-columns: 1fr; }
-  .page-content { padding: var(--space-md); }
+
+  /* Auth card */
+  .auth-card {
+    padding: var(--space-lg);
+  }
+  .auth-bg-glow {
+    width: 300px;
+    height: 300px;
+  }
+
+  /* Modal */
+  .modal {
+    width: 95%;
+    padding: var(--space-md);
+    margin: var(--space-md);
+  }
+
+  /* Toast */
+  .toast-container {
+    top: var(--space-sm);
+    right: var(--space-sm);
+    left: var(--space-sm);
+  }
+  .toast {
+    min-width: 0;
+    max-width: 100%;
+    font-size: var(--fs-xs);
+  }
 }
+
