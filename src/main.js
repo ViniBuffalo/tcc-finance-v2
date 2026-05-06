@@ -42,7 +42,7 @@ function startApp() {
   });
 }
 
-function renderPage(route) {
+async function renderPage(route) {
   const renderer = pageRenderers[route];
   if (!renderer) {
     navigate('dashboard');
@@ -53,8 +53,8 @@ function renderPage(route) {
   renderSidebar(route, (newRoute) => navigate(newRoute));
   renderHeader(route);
 
-  // Render page content
-  renderer();
+  // Render page content (pode ser async)
+  await renderer();
 
   // Scroll to top
   document.querySelector('.page-content')?.scrollTo(0, 0);

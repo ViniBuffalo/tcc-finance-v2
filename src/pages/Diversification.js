@@ -10,14 +10,14 @@ import { showModal } from '../components/Modal.js';
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 let chartInstance = null;
 
-export function renderDiversification() {
+export async function renderDiversification() {
   const session = getSession();
   const el = document.getElementById('page-content');
-  draw(el, session);
+  await draw(el, session);
 }
 
-function draw(el, session) {
-  const assets = getAssets(session.id);
+async function draw(el, session) {
+  const assets = await getAssets(session.id);
   const totalValue = assets.reduce((s, a) => s + a.value, 0);
   const score = calculateDiversificationScore(assets);
   const catTotals = {};
@@ -184,8 +184,8 @@ function bindEvents(el, session) {
 
   // Edit
   el.querySelectorAll('.edit-asset-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const assets = getAssets(session.id);
+    btn.addEventListener('click', async () => {
+      const assets = await getAssets(session.id);
       const asset = assets.find(a => a.id === btn.dataset.id);
       if (asset) openAssetModal(session, el, asset);
     });
@@ -200,12 +200,12 @@ function bindEvents(el, session) {
         body: '<p style="color:var(--text-secondary)">Tem certeza que deseja remover este ativo da sua carteira?</p>',
         confirmText: 'Remover',
         confirmClass: 'btn-danger',
-        onConfirm: () => {
-          let assets = getAssets(session.id);
+        onConfirm: async () => {
+          let assets = await getAssets(session.id);
           assets = assets.filter(a => a.id !== id);
-          saveAssets(session.id, assets);
+          await saveAssets(session.id, assets);
           showToast('Ativo removido', 'success');
-          draw(el, session);
+          await draw(el, session);
         }
       });
     });
@@ -237,21 +237,21 @@ function openAssetModal(session, el, existing = null) {
       </div>
     `,
     confirmText: isEdit ? 'Salvar' : 'Adicionar',
-    onConfirm: () => {
+    onConfirm: async () => {
       const name = document.getElementById('modal-asset-name').value.trim();
       const category = document.getElementById('modal-asset-cat').value;
       const value = parseFloat(document.getElementById('modal-asset-value').value) || 0;
       if (!name || value <= 0) { showToast('Preencha todos os campos corretamente.', 'error'); return; }
 
-      let assets = getAssets(session.id);
+      let assets = await getAssets(session.id);
       if (isEdit) {
         assets = assets.map(a => a.id === existing.id ? { ...a, name, category, value } : a);
       } else {
         assets.push({ id: uid(), name, category, value, createdAt: new Date().toISOString() });
       }
-      saveAssets(session.id, assets);
+      await saveAssets(session.id, assets);
       showToast(isEdit ? 'Ativo atualizado!' : 'Ativo adicionado!', 'success');
-      draw(el, session);
+      await draw(el, session);
     }
   });
 }

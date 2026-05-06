@@ -9,10 +9,10 @@ Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
 let chartInstance = null;
 
-export function renderDashboard() {
+export async function renderDashboard() {
   const session = getSession();
   const el = document.getElementById('page-content');
-  const assets = getAssets(session.id);
+  const assets = await getAssets(session.id);
   const totalValue = assets.reduce((s, a) => s + a.value, 0);
   const score = calculateDiversificationScore(assets);
   const categoryTotals = {};
